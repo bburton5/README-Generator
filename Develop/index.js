@@ -1,6 +1,7 @@
 // TODO: Include packages needed for this application
 const fs = require("fs");
 const inquirer = require("inquirer");
+const generateMarkdown = require("./utils/generateMarkdown");
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -49,43 +50,16 @@ const questions = [
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
-  fs.writeFile("README2.md", "this is the added README", function (err, data) {
+  fs.writeFile(fileName, generateMarkdown(data), function (err, data) {
     console.log(Error);
   });
 }
 
 // TODO: Create a function to initialize app
 function init() {
-  inquirer.prompt([questions[0]]).then((answers) => {
-    console.log("Your Project's Title:", answers.title);
-    inquirer.prompt([questions[1]]).then((answers) => {
-      console.log("Your Project's Description:", answers.description);
-      inquirer.prompt([questions[2]]).then((answers) => {
-        console.log(
-          "Your Project's Installation Instructions:",
-          answers.install
-        );
-        inquirer.prompt([questions[3]]).then((answers) => {
-          console.log("Your Project's Usage Info:", answers.usageinfo);
-          inquirer.prompt([questions[4]]).then((answers) => {
-            console.log(
-              "Your Project's Contribution Guidelines:",
-              answers.constribution
-            );
-            inquirer.prompt([questions[5]]).then((answers) => {
-              console.log("Your Project's Testing Instructions:", answers.test);
-              inquirer.prompt([questions[6]]).then((answers) => {
-                console.log("Your Github Username:", answers.github);
-                inquirer.prompt([questions[7]]).then((answers) => {
-                  console.log("Your Email Address:", answers.email);
-                  writeToFile();
-                });
-              });
-            });
-          });
-        });
-      });
-    });
+  inquirer.prompt(questions).then((answers) => {
+    console.log(answers);
+    writeToFile("README2.md", answers);
   });
 }
 
